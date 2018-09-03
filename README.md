@@ -113,6 +113,52 @@ Set-Up
   * Add "start": "webpack-dev-server" to the "scripts" section of package.json
   * this will add the $ webpack-dev-server command anytime you run $ npm run start
 
+14. Set Up ESLint
+  * npm install eslint@4.13.1 -g
+  * npm install eslint@4.13.1 --save-dev
+  * eslint --init
+    ? How would you like to configure ESLint?
+    Answer questions about your style
+    ? Are you using ECMAScript 6 features? Yes
+    ? Are you using ES6 modules? Yes
+    ? Where will your code run? Browser
+    ? Do you use CommonJS? No
+    ? Do you use JSX? Yes
+    ? Do you use React? Yes
+    ? What style of indentation do you use? Spaces  
+    ? What quotes do you use for strings? Single
+    ? What line endings do you use? Unix
+    ? Do you require semicolons? Yes
+    ? What format do you want your config file to be in? JSON
+    * change "indent" number in .eslintrc.json from 4 to 2
+  * npm install eslint-plugin-react -g
+  * npm install eslint-plugin-react --save-dev
+  * add "lint": "eslint src/** src/**/**; exit 0" to package.json "scripts" section
+  * add "react/jsx-uses-vars": 2 to the "rules" section of .eslintrc.json; this tells ESLint that component names in JSX count as use of a variable
+  * add "react/jsx-uses-react": 2 to the "rules" section of .eslintrc.json; this tell ESLint that the React library is not an unused variable
+  * surround code that shouldn't be linted with:
+    /*eslint-disable */ /*eslint-enable */
+  * add rules to .eslintrc.json
+    "react/jsx-no-duplicate-props": 2, (catches duplicate prop names being passed into a component)
+    "react/jsx-no-undef": 2, (catches JSX variables that are undeclared)
+    "react/no-multi-comp": 2, (prevents us from declaring multiple components in a single file; each component should have its own file)
+    "react/jsx-indent-props": [
+        "error",
+        2
+      ], (checks to ensure we are breaking out props passed into components into separate lines and indenting them the correct amount)
+    "react/jsx-pascal-case": 2, (ensures all component names are written in pascal case)
+    "react/prop-types": 2,
+    "react/jsx-indent": [
+        "error",
+        2
+    ], (validates proper indentation for content nested within JSX tags; 2 is the number of spaces it is checking for and must match the number on our general "indent" rule)
+  * run $ npm run lint to lint your code
+  * run $ npm install eslint-loader --save-dev
+  * add eslint-loader to rules array in webpack.config.js
+  * add "lint-fix": "eslint src/** src/**/** --fix; exit 0" to "scripts" section of package.json (this allows you to run "npm run lint-fix" and it will fix minor issues like indentation)
+
+
+
 CREATING THE APP COMPONENT
 1. Create components folder in src folder
 2. Create main App component file (App.jsx) within components folder

@@ -64,6 +64,16 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
+        enforce: "pre",
+        loader: "eslint-loader",
+        exclude: /node_modules/,
+        options: {
+          emitWarning: true,
+          configFile: "./.eslintrc.json"
+          }
+        },
+      {
+        test: /\.jsx?$/,
         loader: "babel-loader",
         exclude: /node_modules/,
         options: {
@@ -80,6 +90,12 @@ module.exports = {
   },
 
   // *** NOTES ***
+  // - eslint-loader: appears before babel-loader because we want to lint our source code before the babel-loader transpiles it
+  // - test: tells webpack to use this loader for files with .jsx extensions
+  // - enforce: "pre" specifies that this is a pre-loader that must run before normal loaders
+  // - exclude: prevents eslint-loader from linting dependency files
+  // - emit warning: instructs eslint-loader to display its errors in the console for us
+  // - configFile: points the loader to our existing ESLint configuration file so it knows which rules to apply
   // - tells webpack to use the babel-loader tool to transpile our jsx into ES5, that the jsx files can be found via a .jsx extension, and to ignore .jsx files in the node_modues folder
   // - instructed webpack to use babel as a loader
   // - transformation: the loader will pre-process the code before webpack bundles it
