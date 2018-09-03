@@ -157,6 +157,13 @@ Set-Up
   * add eslint-loader to rules array in webpack.config.js
   * add "lint-fix": "eslint src/** src/**/** --fix; exit 0" to "scripts" section of package.json (this allows you to run "npm run lint-fix" and it will fix minor issues like indentation)
 
+15. Configure CSS Modules
+  * npm install --save styled-jsx
+  * update webpack.config with "styled-jsx/babel": this updates our babel-loader to compile CSS and push them to the head of the DOM when the page gets loaded
+  * wrap styles within components in <style jsx>{}</style> tags with styles being typed in the same way as they would in a CSS stylesheet; the style tags should go within the <div> that is being rendered
+  * CSS modules are locally scoped to the component that contains them
+  * when we render our app, the components are given a unique class by Styled-JSX and that class is added to all elements within that component
+
 
 
 CREATING THE APP COMPONENT
@@ -202,3 +209,52 @@ ADDING PROPS
       <h1>{argument.prop1}</h1>
       );
   }
+
+LOOPING
+1. We create an array variable that holds a list of objects we want to loop through within the component file (TicketList.jsx) where we want to loop through them (this is not needed if we are getting information via a database):
+  var masterTicketList = [
+    {
+      names: 'Thato and Haley',
+      location: '3A',
+      issue: 'Firebase wont load data'
+    },
+    {
+      names: 'John and Wilma',
+      location: '3B',
+      issue: 'We pooped our pants'
+    },
+    {
+      names: 'Todd and Genevieve',
+      location: '4C',
+      issue: 'Why are all the computers disappearing?'
+    }
+  ];
+2. We place a loop within the function of that component:
+  function TicketList() {
+    return (
+      <div>
+        <hr/>
+        {masterTicketList.map((ticket, index) =>
+        <Ticket names={ticket.names}
+        location={ticket.location}
+        issue={ticket.issue}
+        key={index} />
+    )}
+      </div>
+    );
+  }
+  * here we are looping through the array of Tickets called "masterTicketList" using the map function
+  * we call the item it is looping through "ticket" (arbitrarily like in foreach loops) and the second parameter is "index", which just refers to the index of that particular "ticket" within the array
+  * we tell it to print a Ticket on each iteration and assign the names, location and issue according to which object is being passed through and its corresponding property. That then gets passed through to the Ticket component, which is controlling how each Ticket is displayed:
+    function Ticket(props) {
+      return (
+        <div>
+          <h3>{props.location} - {props.names}</h3>
+          <p><em>{props.issue}</em></p>
+          <hr/>
+        </div>
+      );
+    }
+  * we must assign each item a "key" that is just whatever its index in the array is, since it needs to have a unique key prop
+3. Lint for key props
+  * add "react/jsx-key": 2 to the eslintrc.json file (alerts if it catches a jsx map() loop without a key prop

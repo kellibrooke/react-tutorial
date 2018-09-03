@@ -82,7 +82,8 @@ module.exports = {
             "react"
           ],
           plugins: [
-            "react-hot-loader/babel"
+            "react-hot-loader/babel",
+            "styled-jsx/babel"
           ]
         }
       }
@@ -104,6 +105,7 @@ module.exports = {
   // - excluded: outlines which files should not be transformed; we don't need to transform our dependencies
   // - options: tells Babel what kind of project we're working with (React) and which version of JavaScript code should be transpiled to (ES5)
   // - {modules:false} turns off CommonJS formatting, which doesn't support hot module replacement
+  // - "styled-jsx/babel": tells babel-loader to compile CSS and push to the head of the DOM when the page loads
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
