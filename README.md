@@ -164,6 +164,24 @@ Set-Up
   * CSS modules are locally scoped to the component that contains them
   * when we render our app, the components are given a unique class by Styled-JSX and that class is added to all elements within that component
 
+  16. Implement React-Router
+    * npm install react-router-dom@4.0.0 --save
+    * import HashRouter into index.jsx
+    * wrap App component's JSX tags in <HashRouter> tags
+    * import Switch and Route into our App.jsx
+      - Route: each different page in our app will correspond with a Route in our router
+      - Switch: determines which route matches the path the user is requesting; when we have multiple routes they should reside inside a switch component, which will allow the React-Router to iterate through the routes and locate the one that matches the page the user is requesting
+    * routes will be placed within <Switch></Switch> tags
+      - <Route exact path='/' component={TicketList} />
+      - path: the URL that corresponds with the route
+      - exact: this keyword is necessary on the '/' route because there are slashes in all the paths, so it can confuse the system to think that anything with a slash is matching, so we tell it to only find that exact path of '/'
+      - component: the component that should be loaded when the route is invoked
+      - anything that shows a route with a # in it is a route that was NOT sent to the server, and is thus client-side; a # must be inserted in order to view the route in spite of it not being shown in the router tag
+    * Linking Between Routes
+      - import Link into component where we will be using the links
+      - insert Link tags in the same way you would use <a> tags into the jsx code
+        * ex: <Link to="/">Home</Link>
+
 
 
 CREATING THE APP COMPONENT
