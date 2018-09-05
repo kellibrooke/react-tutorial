@@ -86,7 +86,17 @@ module.exports = {
             "styled-jsx/babel"
           ]
         }
+      },
+      {
+      test: /\.(png|gif|jp(e*)g|svg)$/,
+      use: {
+        loader: 'url-loader',
+        options: {
+          limit: 8000,
+          name: 'images/[hash]-[name].[ext]'
+        }
       }
+    }
     ]
   },
 
@@ -106,6 +116,11 @@ module.exports = {
   // - options: tells Babel what kind of project we're working with (React) and which version of JavaScript code should be transpiled to (ES5)
   // - {modules:false} turns off CommonJS formatting, which doesn't support hot module replacement
   // - "styled-jsx/babel": tells babel-loader to compile CSS and push to the head of the DOM when the page loads
+  // test: tells webpack what type of file extensions should be encoded to base64
+  // use: specifies url-loader as the webpack loader responsible for handling the file types specified in test
+  // limit: maximum file size in kb we are permitting url-loader to encode; if an image is larger than this it will be handled by file-loader
+  // name: provides the naming format for images processed by webpack
+
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

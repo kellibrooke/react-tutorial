@@ -164,25 +164,55 @@ Set-Up
   * CSS modules are locally scoped to the component that contains them
   * when we render our app, the components are given a unique class by Styled-JSX and that class is added to all elements within that component
 
-  16. Implement React-Router
-    * npm install react-router-dom@4.0.0 --save
-    * import HashRouter into index.jsx
-    * wrap App component's JSX tags in <HashRouter> tags
-    * import Switch and Route into our App.jsx
-      - Route: each different page in our app will correspond with a Route in our router
-      - Switch: determines which route matches the path the user is requesting; when we have multiple routes they should reside inside a switch component, which will allow the React-Router to iterate through the routes and locate the one that matches the page the user is requesting
-    * routes will be placed within <Switch></Switch> tags
-      - <Route exact path='/' component={TicketList} />
-      - path: the URL that corresponds with the route
-      - exact: this keyword is necessary on the '/' route because there are slashes in all the paths, so it can confuse the system to think that anything with a slash is matching, so we tell it to only find that exact path of '/'
-      - component: the component that should be loaded when the route is invoked
-      - anything that shows a route with a # in it is a route that was NOT sent to the server, and is thus client-side; a # must be inserted in order to view the route in spite of it not being shown in the router tag
-    * Linking Between Routes
-      - import Link into component where we will be using the links
-      - insert Link tags in the same way you would use <a> tags into the jsx code
-        * ex: <Link to="/">Home</Link>
+16. Implement React-Router
+  * npm install react-router-dom@4.0.0 --save
+  * import HashRouter into index.jsx
+  * wrap App component's JSX tags in <HashRouter> tags
+  * import Switch and Route into our App.jsx
+    - Route: each different page in our app will correspond with a Route in our router
+    - Switch: determines which route matches the path the user is requesting; when we have multiple routes they should reside inside a switch component, which will allow the React-Router to iterate through the routes and locate the one that matches the page the user is requesting
+  * routes will be placed within <Switch></Switch> tags
+    - <Route exact path='/' component={TicketList} />
+    - path: the URL that corresponds with the route
+    - exact: this keyword is necessary on the '/' route because there are slashes in all the paths, so it can confuse the system to think that anything with a slash is matching, so we tell it to only find that exact path of '/'
+    - component: the component that should be loaded when the route is invoked
+    - anything that shows a route with a # in it is a route that was NOT sent to the server, and is thus client-side; a # must be inserted in order to view the route in spite of it not being shown in the router tag
+  * Linking Between Routes
+    - import Link into component where we will be using the links
+    - insert Link tags in the same way you would use <a> tags into the jsx code
+      * ex: <Link to="/">Home</Link>
 
+17. Adding Images
+  * install url-loader, which webpack uses to convert images to text (base64)
+    - npm install url-loader@0.6.2 --save-dev
+  * install file-loader, which handles extra-large images that url-loader cant handle
+    - npm install file-loader@1.1.6 --save-dev
+  * create a new rule in webpack.config for the 'url-loader' (see webpack-config-starter for explanation)
+  * restart development server to see changes
+  * images should be stored in src/assets/images
+  * import photo into the component you want to use it in like this:
+    - import reallyAdorablePuppy from '../assets/images/cutestpuppy.jpg';
+  * then place the img tag in the JSX of that component like this:
+    - <img src={reallyAdorablePuppy}/>
 
+18. Create An Error Route
+  * create a new Route (<Route component={Error404} />), component and import statement for that component
+    - no path is used in our Route because we only want to display Error404 when the user attempts to travel to a location that does not exist; the <Switch> will iterate through all paths inside of it, and if it doesn't find a path, the Error component will be rendered
+  * within Error404 component, import Link so you can include a link to the Home page or another page since the page requested cannot be found
+  * TO CUSTOMIZE:
+    - pass props to our Error404 function in the component like this:
+    function Error404(props){
+      console.log(props);
+    }
+    - use the console log results to see the built in props in the route
+    - use these to put that data into your component's JSX code like this:
+      * <h2>The page {props.location.pathname}  does not exist!</h2>
+    - declare a propType for the prop you are trying to insert
+      * import PropTypes
+      * insert propTypes declaration just above your export statement at the bottom of your component like this:
+        - Error404.propTypes = {
+          location: PropTypes.object
+          };
 
 CREATING THE APP COMPONENT
 1. Create components folder in src folder
