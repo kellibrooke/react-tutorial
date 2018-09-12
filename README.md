@@ -258,6 +258,38 @@ ADDING PROPS
       );
   }
 
+CREATING CLASS COMPONENTS
+1. This component should be determining the state of an application
+2. A common naming convention is ComponentNameControl.jsx and it should be placed in the components folder
+3. class ComponentNameControl extends React.Component { render() { put JSX code to be rendered here }}
+4. Insert a constructor that takes props as an argument:
+  - constructor(props) {
+    super(props);
+    this.state = { key:value };
+    }
+    * super is called to access a parent class's constructor (React.Component) to ensure that our component has all the functionality of a React component
+    * the constructor contains this.state = {}, which is an object containing key-value pairs, and will represent all of our state values
+5. Create a route to the component in the route list
+6. Attach a click event to something in the JSX: <p onClick={methodName}>Click Here</p>
+7. Write the method for our event handler (methodName)
+  * methodName() { method code goes here }
+  * manually bind the method in our constructor to define its "this"
+    - this.methodName = this.handleClick.bind(this);
+
+INSTALLING AND USING UUID LIBRARY
+1. npm install uuid@3.2.1
+2. Import {v4} into the component where we create the new instances
+  * v4 is the method in the UUID library that is responsible for creating the unique IDs; there are different methods that create IDs based on different things like timestamps or namespaces
+3. Call the v4() method wherever we want to add a unique ID
+  - props.onNewTicketCreation({names: _names.value, location: _location.value, issue: _issue.value, id: v4()});
+4. When we map our list of tickets we can display the id using the prop "id"  
+  - {props.ticketList.map((ticket) =>
+        <Ticket names={ticket.names}
+          location={ticket.location}
+          issue={ticket.issue}
+          key={ticket.id}/>
+      )}
+
 LOOPING
 1. We create an array variable that holds a list of objects we want to loop through within the component file (TicketList.jsx) where we want to loop through them (this is not needed if we are getting information via a database):
   var masterTicketList = [
